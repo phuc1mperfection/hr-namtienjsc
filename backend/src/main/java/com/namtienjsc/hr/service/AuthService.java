@@ -1,5 +1,6 @@
 package com.namtienjsc.hr.service;
 
+import com.namtienjsc.hr.dto.LoginResponse;
 import com.namtienjsc.hr.dto.LoginRequest;
 import com.namtienjsc.hr.dto.UserResponse;
 import com.namtienjsc.hr.entity.User;
@@ -14,18 +15,21 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserResponse login(LoginRequest request) {
-        // Find user by email
+    public LoginResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email hoặc mật khẩu không đúng"));
 
-        // Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new RuntimeException("Email hoặc mật khẩu không đúng");
         }
 
-        // Return user response
-        return UserResponse.fromEntity(user);
+        String token = jwtService.generateToken(user);
+
+        return LoginResponse.builder()
+                .token(token)
+                .user(UserResponse.fromEntity(user))
+                .build();
     }
 }

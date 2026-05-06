@@ -1,7 +1,7 @@
 package com.namtienjsc.hr.controller;
 
+import com.namtienjsc.hr.dto.LoginResponse;
 import com.namtienjsc.hr.dto.LoginRequest;
-import com.namtienjsc.hr.dto.UserResponse;
 import com.namtienjsc.hr.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest request) {
-        UserResponse response = authService.login(request);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }
 }
