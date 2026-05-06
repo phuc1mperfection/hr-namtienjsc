@@ -1,0 +1,28 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: hr-api
+
+  security:
+    user:
+      name: admin
+      password: admin123
+      roles: ADMIN
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hr_namtienjsc_db
+    username: postgres
+    password: 2704
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
